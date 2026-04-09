@@ -4,95 +4,7 @@ HTML
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Repository/title>
-    <style>
-        /* This is where the "vibe" lives */
-        body {
-            font-family: "Courier New", Courier, monospace; /* Classic typewriter feel */
-            line-height: 1.6;
-            color: #333;
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 0 20px;
-            background-color: #fdfaf6; /* Soft paper-like background */
-        }
-
-        header {
-            border-bottom: 2px solid #333;
-            margin-bottom: 30px;
-        }
-
-        h1 { font-size: 1.5rem; text-transform: uppercase; }
-        
-        .hobby-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .card {
-            border: 1px solid #333;
-            padding: 15px;
-            background: white;
-            box-shadow: 5px 5px 0px #333; /* Retro "pop" shadow */
-        }
-
-        .status-tag {
-            font-size: 0.8rem;
-            background: #eec;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        a { color: #d44; text-decoration: none; font-weight: bold; }
-        a:hover { text-decoration: underline; }
-
-        footer { margin-top: 50px; font-size: 0.8rem; opacity: 0.7; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>Welcome to my digital garden.</h1>
-        <p>A place for my half-baked ideas and creative hobbies.</p>
-    </header>
-
-    <main>
-        <section>
-            <h2>Currently tinkering with...</h2>
-            <div class="hobby-grid">
-                <div class="card">
-                    <span class="status-tag">Active</span>
-                    <h3>Photograhical</h3>
-                    <p>Capturing the quiet corners of my neighborhood.</p>
-                    <a href="#">View Gallery →</a>
-                </div>
-
-                <div class="card">
-                    <span class="status-tag">WIP</span>
-                    <h3>Storage Archive</h3>
-                    <p>Knowing where to find all that stuff with tech.</p>
-                    <a href="#">Read Entries →</a>
-                </div>
-            </div>
-        </section>
-
-        <section style="margin-top: 40px;">
-            <h2>About this space</h2>
-            <p>This site is a work in progress. It's hosted on GitHub and built with zero distractions. No cookies, no tracking, just vibes.</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>Built with ❤️ by [Essteejay] — 2026</p>
-    </footer>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Storage Hub</title>
+    <title>Storage Inventory + Search</title>
     <style>
         body {
             font-family: "Courier New", Courier, monospace;
@@ -104,25 +16,21 @@ HTML
             background-color: #fdfaf6;
         }
 
-        header {
-            border-bottom: 2px solid #333;
-            margin-bottom: 30px;
-            padding-bottom: 10px;
-        }
+        header { border-bottom: 2px solid #333; margin-bottom: 30px; }
 
-        /* Search Bar Styling */
         .search-container {
             margin-bottom: 30px;
-            position: sticky; /* Keeps it at the top while you scroll */
+            position: sticky;
             top: 10px;
             z-index: 100;
+            background-color: #fdfaf6;
+            padding: 5px 0;
         }
 
         #itemSearch {
             width: 100%;
-            padding: 12px;
-            font-size: 1rem;
-            font-family: inherit;
+            padding: 15px;
+            font-size: 1.1rem;
             border: 2px solid #333;
             box-shadow: 4px 4px 0px #333;
             outline: none;
@@ -134,20 +42,30 @@ HTML
             background: white;
             box-shadow: 5px 5px 0px #333;
             margin-bottom: 25px;
-            transition: 0.2s;
         }
 
-        /* This class hides boxes that don't match the search */
         .hidden { display: none; }
 
-        .status-tag {
-            font-size: 0.8rem;
-            background: #eec;
-            padding: 2px 6px;
-            border-radius: 4px;
+        /* This makes the found text pop! */
+        mark {
+            background-color: #ff0;
+            color: black;
+            padding: 0 2px;
+            font-weight: bold;
         }
 
-        h3 { margin-top: 0; color: #d44; }
+        .meta-data {
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+            color: #666;
+        }
+
+        .status-tag { background: #eec; padding: 2px 6px; border-radius: 4px; }
+        h3 { margin: 0 0 10px 0; color: #d44; }
         ul { padding-left: 20px; }
     </style>
 </head>
@@ -155,11 +73,11 @@ HTML
 
     <header>
         <h1>📦 Storage Inventory</h1>
-        <p>Scan a box or search for an item below.</p>
+        <p>Type below to find items instantly.</p>
     </header>
 
     <div class="search-container">
-        <input type="text" id="itemSearch" placeholder="Type to find an item (e.g. 'boots')..." onkeyup="searchBoxes()">
+        <input type="text" id="itemSearch" placeholder="Search for an item (e.g. 'Coats')..." onkeyup="searchAndHighlight()">
     </div>
 
     <main id="inventoryList">
@@ -174,6 +92,10 @@ HTML
                 <li>Holiday shorts</li>
                 <li>Spare bathing trunks</li>
             </ul>
+            <div class="meta-data">
+                <span>Box ID: #1</span>
+                <span>Last Updated: April 9 , 2026</span>
+            </div>
         </div>
 
         <div id="box2" class="card">
@@ -187,6 +109,10 @@ HTML
                 <li>Scarves and wooly balaclava</li>
                 <li>Long Johns</li>
             </ul>
+            <div class="meta-data">
+                <span>Box ID: #1</span>
+                <span>Last Updated: April 9 , 2026</span>
+            </div>
         </div>
 
         <div id="box3" class="card">
@@ -194,6 +120,11 @@ HTML
             <span class="status-tag">Location: Under our bed</span>
             <ul>
                 <li>Pullovers-jumpers</li>
+             </ul> 
+                <div class="meta-data">
+                <span>Box ID: #1</span>
+                <span>Last Updated: April 9 , 2026</span>
+            </div>
          </div>
 
         <div id="box4" class="card">
@@ -201,6 +132,11 @@ HTML
             <span class="status-tag">Location: Attic</span>
             <ul>
                 <li>Holiday polo shirts and short sleeved shirts</li>
+                 <div class="meta-data">
+                <span>Box ID: #1</span>
+              <ul>        
+                <span>Last Updated: April 9 , 2026</span>
+            </div>
          </div>                                     
         
                 <div id="box5" class="card">
@@ -220,32 +156,59 @@ HTML
                 <li>Caligraphy pens - 1st black drawer down in study</li>
                 <li>Stethoscope -  1st black drawer down in study</li>
                  <li>Belt/learther punch - 5th black drawer down in study</li>
-                          
+            <ul>     
+                <div class="meta-data">
+                <span>Box ID: #1</span>
+              <ul>        
+                <span>Last Updated: April 9 , 2026</span>
+            </div>         
                              
         </div>
         </main>
 
-    <script>
-        function searchBoxes() {
-            // Get the search text
+  <script>
+        // Store original content to reset highlights
+        const originalContent = {};
+        window.onload = () => {
+            const cards = document.getElementsByClassName('card');
+            for (let card of cards) {
+                originalContent[card.id] = card.innerHTML;
+            }
+        };
+
+        function searchAndHighlight() {
             let input = document.getElementById('itemSearch').value.toLowerCase();
-            // Get all the boxes (cards)
             let cards = document.getElementsByClassName('card');
 
-            for (let i = 0; i < cards.length; i++) {
-                // Check if the text inside the card matches the search
-                let content = cards[i].textContent.toLowerCase();
-                if (content.includes(input)) {
-                    cards[i].classList.remove('hidden');
+            for (let card of cards) {
+                let id = card.id;
+                // Reset card to original text before re-highlighting
+                card.innerHTML = originalContent[id];
+                
+                let text = card.textContent.toLowerCase();
+
+                if (input.length > 0 && text.includes(input)) {
+                    card.classList.remove('hidden');
+                    // Highlight the text logic
+                    highlightText(card, input);
+                } else if (input.length === 0) {
+                    card.classList.remove('hidden');
                 } else {
-                    cards[i].classList.add('hidden');
+                    card.classList.add('hidden');
                 }
+            }
+        }
+
+        function highlightText(element, searchTerm) {
+            let innerHTML = element.innerHTML;
+            let index = innerHTML.toLowerCase().indexOf(searchTerm);
+            if (index >= 0) { 
+                // Simple regex to replace text with marked text (ignores tags)
+                let regex = new RegExp(`(${searchTerm})`, "gi");
+                element.innerHTML = innerHTML.replace(regex, "<mark>$1</mark>");
             }
         }
     </script>
 
-    <footer>
-        <p>Tip: Use the #boxNumber in your URL for QR codes.</p>
-    </footer>
 </body>
 </html>
